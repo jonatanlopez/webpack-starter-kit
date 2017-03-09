@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build-client": "rimraf dist && babel-node bundle.js",
+    "build-client": "rimraf wwwroot/dist && babel-node bundle.js",
     "server": "nodemon --watch server --exec babel-node -- server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,9 +18,12 @@
     "express": "^4.15.2",
     "nodemon": "^1.11.0",
     "rimraf": "^2.6.1",
-    "webpack": "^2.2.1"
+    "webpack": "^2.2.1",
+    "webpack-dev-middleware": "^1.10.1",
+    "webpack-hot-middleware": "^2.17.1"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
     "moment": "^2.17.1"
   }
 }

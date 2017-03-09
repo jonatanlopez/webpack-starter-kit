@@ -15,8 +15,8 @@ export default {
         //vendor: ['moment'] //Manual vendor bundling
     },
     output: {
-        path: path.join(__dirname, 'dist'),
-        filename: '[name].js',
+        path: path.join(__dirname, 'wwwroot/js'),
+        filename: '[name]-[hash].js',
         publicPath: '/public/'
     },
 
@@ -30,7 +30,13 @@ export default {
                 test: /\.(js|jsx)$/,
                 exclude: [/node_modules/],
                 use: 'babel-loader'
-            }
+            },
+
+            // {
+            //     test: /\.css$/,
+            //     exclude: [/node_modules/],
+            //     use: ['style-loader','css-loader']
+            // }
         ]
     },
 
@@ -39,8 +45,15 @@ export default {
         //Automatic vendor bundling
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'vendor.js',
-            minChunks: 2, // if you have any modules that get loaded 2 or more times 
+            filename: 'vendor-[hash].js',
+            //minChunks: 2, // if you have any modules that get loaded 2 or more times 
+            minChunks: function (module) {
+                // this assumes your vendor imports exist in the node_modules directory
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true
         })
     ]
 }
